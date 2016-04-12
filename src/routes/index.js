@@ -6,7 +6,8 @@ import GalleryPage from 'containers/GalleryPage'
 
 export default (store) => (
   <Route path="/" component={App}>
-    <Route path="/:username(/:path)" component={GalleryPage} />
-
+    <Route path="user/:username" component={UserPage}>
+      <Route path="gallery/:path" component={GalleryPage} />
+    </Route>
   </Route>
 )

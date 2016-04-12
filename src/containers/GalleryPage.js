@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
 import { connect } from 'react-redux'
 import { loadGallery, loadGalleryItems } from '../actions/gallery'
 import { loadUser } from '../actions/user'
@@ -8,11 +7,8 @@ import Photo from '../components/Photo'
 import List from '../components/List'
 
 function loadData(props) {
-  const { username, path } = props.params
-  const { owner, fullPath } = props
-  if(!owner) {
-    props.loadUser(username)
-  } else {
+  const { owner, fullPath, path} = props
+  if(owner) {
     props.loadGallery(owner.id, path, fullPath)
     props.loadGalleryItems(owner.id, path, fullPath)
   }
@@ -29,18 +25,14 @@ class GalleryPage extends Component {
     loadData(this.props)
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (nextProps.path!== this.props.path) {
+    if (nextProps.gallery !== this.props.gallery) {
       loadData(nextProps)
     }
   }
 
   handleLoadMoreClick() {
-    const { owner, path, fullPath } = this.props
+    const { owner, fullPath, params: {path} } = this.props
     this.props.loadGalleryItems(owner.id, path, fullPath)
   }
 
@@ -85,7 +77,8 @@ GalleryPage.propTypes = {
   gallery: PropTypes.object,
   fullPath: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  owner: PropTypes.object.isRequired,
+  owner: PropTypes.object,
+  galleryItems: PropTypes.array.isRequired,
   galleryItemsPagination: PropTypes.object,
   loadGallery: PropTypes.func.isRequired,
   loadGalleryItems: PropTypes.func.isRequired
@@ -95,7 +88,7 @@ function mapStateToProps(state, ownProps) {
   const { username, path } = ownProps.params
   const {
     pagination: { galleryItemsOfGallery },
-    entities: { photos, gallery, user }
+    entities: { galleries, users }
   } = state
 
   const fullPath = `${username}/${path}`
@@ -103,19 +96,16 @@ function mapStateToProps(state, ownProps) {
   const galleryItems = galleryItemsPagination.ids.map(id => users[id])
 
   return {
-    gallery,
-    items: photos,
     fullPath,
-    username,
     path,
-    owner: user,
     galleryItems,
-    galleryItemsPagination
+    galleryItemsPagination,
+    gallery: galleries[fullPath],
+    owner: users[username]
   }
 }
 
 export default connect(mapStateToProps, {
   loadGallery,
-  loadGalleryItems,
-  loadUser
+  loadGalleryItems
 })(GalleryPage)

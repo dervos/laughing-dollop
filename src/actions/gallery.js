@@ -1,14 +1,9 @@
-import api from '../helpers'
 import { GALLERY, GALLERIES, GALLERY_PHOTOS } from '../constants'
-
+import { get } from '../helpers'
 
 const fetchGallery = (id, path) => ({
   type: GALLERY,
-  payload:  api.get(`users/${id}/galleries/${path}`, {
-    params: {
-      consumer_key: 'GvEAXk6cHDuELGqcaV38N2w7LjBTgcha8oVn8zwY'
-    }
-  })
+  payload:  get(`users/${id}/galleries/${path}`)
 })
 
 export function loadGallery( id , path, fullPath ){
@@ -17,15 +12,10 @@ export function loadGallery( id , path, fullPath ){
   }
 }
 
-
 const fetchGalleryItems = (id, path, fullPath ) => ({
   type: GALLERY_PHOTOS,
-  payload: api.get(`users/${id}/galleries/${path}/items`, {
-    params: {
-      consumer_key: 'GvEAXk6cHDuELGqcaV38N2w7LjBTgcha8oVn8zwY'
-    }
-  }),
-  meta: {fullPath}
+  payload: get(`users/${id}/galleries/${path}/items`),
+  meta: { fullPath }
 })
 
 export function loadGalleryItems( id, path, fullPath ) {
@@ -34,23 +24,19 @@ export function loadGalleryItems( id, path, fullPath ) {
   }
 }
 
-
-const fetchOwnedGalleries = (user_id, username) => ({
+const fetchOwnedGalleries = (id, username) => ({
   type: GALLERIES,
-  payload: api.get(`users/${user_id}/galleries`, {
-    params: {
-      consumer_key: 'GvEAXk6cHDuELGqcaV38N2w7LjBTgcha8oVn8zwY'
-    }
-  })
+  payload: get(`users/${id}/galleries`),
+  meta: {username}
 })
 
-export function loadOwnedGalleries(user_id, fullPath) {
+export function loadOwnedGalleries(id, username) {
   return (dispatch, getState) => {
-    const gallery = getState().entities.galleries[fullPath]
-    if (gallery) {
+    const galleries = getState().pagination.galleriesOfUser[username]
+    if (galleries) {
       return null
     }
-    return dispatch(fetchOwnedGalleries(user_id, fullPath))
+    return dispatch(fetchOwnedGalleries(id, username))
   }
 }
 

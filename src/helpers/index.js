@@ -1,7 +1,17 @@
 import axios from 'axios'
+import secrets from '../secret.js'
 
-axios.defaults.headers.common['Access-Control-Allow-Origin']
-axios.defaults.baseURL = 'https://api.500px.com/v1/'
 
-export default axios
+const instance = axios.create({
+  baseURL:  'https://api.500px.com/v1/'
+})
+
+export function get(url, parameters) {
+  return instance.get(url, {
+    params: {
+      ...parameters,
+      consumer_key: secrets.consumer_key,
+    }
+  })
+}
 

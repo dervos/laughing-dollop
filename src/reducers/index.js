@@ -1,16 +1,10 @@
-import { GALLERIES, GALLERY_PHOTOS } from '../constants'
+import { GALLERIES, GALLERY_PHOTOS, normalizeResponse } from '../constants'
 import merge from 'lodash/merge'
 import paginate from './paginate'
 import { routerReducer as router } from 'react-router-redux'
 import { combineReducers } from 'redux'
 
-
-function entities(state = {gallery: {}, user: {}, photos: [] }, action) {
-  if (action.payload && action.payload.data) {
-    return merge({}, state, action.payload.data)
-  }
-  return state
-}
+import entities from './entities'
 
 const pagination = combineReducers({
   galleriesOfUser: paginate({
@@ -32,9 +26,9 @@ const pagination = combineReducers({
 })
 
 
-export default combineReducers({
+export default {
   entities,
   pagination,
   router
-})
+}
 
