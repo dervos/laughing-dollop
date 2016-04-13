@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
+import { ReduxAsyncConnect } from 'redux-async-connect'
 import '../styles/core.scss'
 
 
@@ -13,7 +14,7 @@ export default class Root extends React.Component {
 
   get content () {
     return (
-      <Router history={this.props.history}>
+      <Router render={(props) => <ReduxAsyncConnect {...props}/>} history={this.props.history}>
         {this.props.routes}
       </Router>
     )

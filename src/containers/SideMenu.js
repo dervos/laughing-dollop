@@ -9,10 +9,10 @@ class SideMenu extends React.Component {
         <div class="pure-menu">
           <Link className="pure-menu-heading" to="/">Dervos</Link>
           <ul className="pure-menu-list">
-            <li className="pure-menu-item">
+            <li className="menu-item">
               <Link className="pure-menu-link" to="/user/dervos">Galleries</Link>
             </li>
-            <li className="pure-menu-item">
+            <li className="menu-item">
               <Link className="pure-menu-link" to="/user/dervos/gallery/amsterdam">Amsterdam</Link>
             </li>
           </ul>

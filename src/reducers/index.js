@@ -1,34 +1,14 @@
-import { GALLERIES, GALLERY_PHOTOS, normalizeResponse } from '../constants'
-import merge from 'lodash/merge'
-import paginate from './paginate'
-import { routerReducer as router } from 'react-router-redux'
-import { combineReducers } from 'redux'
-
 import entities from './entities'
-
-const pagination = combineReducers({
-  galleriesOfUser: paginate({
-    mapActionToKey: action => action.meta.username,
-      types: [
-        `${GALLERIES}_PENDING`,
-        `${GALLERIES}_FULFILLED`,
-        `${GALLERIES}_REJECTED`
-      ]
-  }),
-  galleryItemsOfGallery: paginate({
-    mapActionToKey: action => action.meta.fullPath,
-      types: [
-        `${GALLERY_PHOTOS}_PENDING`,
-        `${GALLERY_PHOTOS}_FULFILLED`,
-        `${GALLERY_PHOTOS}_REJECTED`
-      ]
-  })
-})
-
+import user from './user'
+import paginate from './paginate'
+import request from './request'
+import session from './session'
 
 export default {
   entities,
-  pagination,
-  router
+  user,
+  paginate,
+  request,
+  session
 }
 

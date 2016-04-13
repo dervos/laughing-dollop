@@ -118,23 +118,10 @@ webpackConfig.module.loaders = [{
   exclude: /node_modules/,
   loader: 'babel',
   query: {
-    cacheDirectory: true,
-    plugins: ['transform-runtime'],
-    presets: ['es2015', 'react', 'stage-0'],
+    presets: ['es2015-node5', 'es2015', 'react', 'stage-0'],
     env: {
       development: {
-        plugins: [
-          ['react-transform', {
-            transforms: [{
-              transform: 'react-transform-hmr',
-              imports: ['react'],
-              locals: ['module']
-            }, {
-              transform: 'react-transform-catch-errors',
-              imports: ['react', 'redbox-react']
-            }]
-          }]
-        ]
+        presets: ['react-hmre']
       },
       production: {
         plugins: [

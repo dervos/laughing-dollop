@@ -1,14 +1,19 @@
 
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
+import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
-import rootReducer from '../reducers'
-import { routerMiddleware } from 'react-router-redux'
+import { routerMiddleware, routerReducer as router } from 'react-router-redux'
 
-import {combineReducers} from 'redux';
-import reducers from '../reducers/index';
+import reducers from 'reducers/index';
 
 export default function configureStore (initialState = {}, history) {
+  const rootReducer = combineReducers({
+    ...reducers,
+    reduxAsyncConnect,
+    router
+  })
+
   // Compose final middleware and use devtools in debug environment
   let middleware = applyMiddleware(thunk, routerMiddleware(history), createLogger())
   if (__DEBUG__) {

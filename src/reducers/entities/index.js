@@ -1,4 +1,4 @@
-import * as actionTypes from '../../constants/actionTypes';
+import * as actionTypes from 'constants/actionTypes';
 import merge from 'lodash/fp/merge';
 
 const initialState = {

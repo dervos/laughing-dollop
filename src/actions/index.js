@@ -1,9 +1,13 @@
-import * as UserActions  from './user'
-import * as GalleryActions  from './gallery'
+/* eslint-disable max-len */
+import { login, logout } from './session';
+import { changeLocation } from './location';
+import { fetchPhotosByGallery, fetchGalleries } from './user';
+/* eslint-enable max-len */
 
-export default {
-  UserActions,
-  GalleryActions
-}
-
-
+export {
+  login,
+  logout,
+  changeLocation,
+  fetchGalleries,
+  fetchPhotosByGallery
+};
