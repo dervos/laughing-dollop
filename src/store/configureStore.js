@@ -1,21 +1,22 @@
 
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import { reducer as reduxAsyncConnect } from 'redux-async-connect'
-import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
+import sagaMiddleware from 'redux-saga'
 import { routerMiddleware, routerReducer as router } from 'react-router-redux'
 
-import reducers from 'reducers/index';
+import reducers from 'reducers';
+import rootSaga from 'sagas'
+
+export const sagaMiddleware = createSagaMiddleware(rootSaga)
 
 export default function configureStore (initialState = {}, history) {
   const rootReducer = combineReducers({
     ...reducers,
-    reduxAsyncConnect,
     router
   })
 
   // Compose final middleware and use devtools in debug environment
-  let middleware = applyMiddleware(thunk, routerMiddleware(history), createLogger())
+    let middleware = applyMiddleware(sagaMiddleware, routerMiddleware(history), createLogger())
   if (__DEBUG__) {
     const devTools = window.devToolsExtension
       ? window.devToolsExtension()

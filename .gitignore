@@ -1,4 +1,4 @@
 node_modules
-src/secrets.js
+secret.js
 dist
 .cs_files

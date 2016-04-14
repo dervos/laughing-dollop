@@ -5,39 +5,13 @@ import webpackConfig from '../build/webpack.config'
 import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware'
 import historyApiFallback from 'koa-connect-history-api-fallback'
 import serve from 'koa-static'
-import proxy from 'koa-proxy'
+//import proxy from 'koa-proxy'
 import _debug from 'debug'
 import config from '../config'
-
-import mount from 'koa-mount'
-import route from 'koa-route'
-import session from 'koa-session2'
 
 const debug = _debug('app:server')
 const paths = config.utils_paths
 const app = new Koa()
-// Enable koa-proxy if it has been enabled in the config.
-if (config.proxy && config.proxy.enabled) {
-  app.use(convert(proxy(config.proxy.options)))
-}
-
-//app.keys = ['tepelvlinder']
-//
-//app.use(session({
-//  store: redisStore()
-//}))
-//
-//app.use(route.get('/handle_500px_callback', (ctx) => {
-//  console.log(ctx.query)
-//  ctx.body = JSON.stringify(ctx.query, null, 2)
-//}))
-
-// This rewrites all routes requests to the root /index.html file
-// (ignoring file requests). If you want to implement isomorphic
-// rendering, you'll want to remove this middleware.
-app.use(convert(historyApiFallback({
-  verbose: false
-})))
 
 
 // ------------------------------------

@@ -4,11 +4,11 @@
 export default (config) => ({
   compiler_public_path: `http://${config.server_host}:${config.server_port}/`,
   proxy: {
-    enabled: true,
+    enabled: false,
     options: {
       // koa-proxy options
-      host: '//api.500px.com/v1/',
-      match: /^\/api\/.*/
+      host: 'https://api.500px.com/v1/',
+      url: /^\/api\/.*/
     }
   }
 })
