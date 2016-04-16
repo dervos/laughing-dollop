@@ -4,6 +4,7 @@ export default (body, initialState) => (`
   <head>
     <meta charset="UTF-8"/>
     <title>Redux-saga real-world universal example</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="root">${body}</div>

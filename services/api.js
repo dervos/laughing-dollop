@@ -17,7 +17,7 @@ function getNextPageUrl(response) {
   return nextLink.split(';')[0].slice(1, -1)
 }
 
-const API_ROOT = 'https://api.500px.com/v1/'
+const API_ROOT = 'https://api.github.com/'
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
@@ -48,7 +48,7 @@ function callApi(endpoint, schema) {
 }
 
 // We use this Normalizr schemas to transform API responses from a nested form
-// to a flat form where gallerys and users are placed in `entities`, and nested
+// to a flat form where repos and users are placed in `entities`, and nested
 // JSON objects are replaced with their IDs. This is very convenient for
 // consumption by reducers, because we can easily build a normalized tree
 // and keep it updated as we fetch more data.
@@ -57,22 +57,22 @@ function callApi(endpoint, schema) {
 
 // Schemas for Github API responses.
 const userSchema = new Schema('users', {
-  idAttribute: 'userId'
+  idAttribute: 'login'
 })
 
-const gallerySchema = new Schema('galleries', {
-  idAttribute: 'customPath'
+const repoSchema = new Schema('repos', {
+  idAttribute: 'fullName'
 })
 
-gallerySchema.define({
+repoSchema.define({
   owner: userSchema
 })
 
 const userSchemaArray = arrayOf(userSchema)
-const gallerySchemaArray = arrayOf(gallerySchema)
+const repoSchemaArray = arrayOf(repoSchema)
 
 // api services
-export const fetchUser = userId => callApi(`users/${userId}`, userSchema)
-export const fetchGallery = customPath => callApi(`users/${userId}/galleries/${customPath}`, gallerySchema)
-export const fetchStarred = url => callApi(url, gallerySchemaArray)
+export const fetchUser = login => callApi(`users/${login}`, userSchema)
+export const fetchRepo = fullName => callApi(`repos/${fullName}`, repoSchema)
+export const fetchStarred = url => callApi(url, repoSchemaArray)
 export const fetchStargazers = url => callApi(url, userSchemaArray)
