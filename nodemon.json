@@ -1,0 +1,13 @@
+
+{
+    "verbose": false,
+    "watch": [
+      "app/server.js",
+      "app/routes.js",
+      "app/helmconfig.js",
+      "app/components/Meta.js",
+      "server",
+      "webpack"
+    ],
+    "exec": "npm run build:dev && npm run babel-node -- server/index.js"
+}

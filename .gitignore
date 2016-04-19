@@ -2,3 +2,9 @@ node_modules
 secret.js
 dist
 .cs_files
+.tmp
+.idea
+public
+compiled
+.swp
+.vscode
